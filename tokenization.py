@@ -87,7 +87,7 @@ def convert_to_unicode(text):
   elif six.PY2:
     if isinstance(text, str):
       return text.decode("utf-8", "ignore")
-    elif isinstance(text, unicode):
+    elif isinstance(text, str):
       return text
     else:
       raise ValueError("Unsupported string type: %s" % (type(text)))
@@ -96,7 +96,7 @@ def convert_to_unicode(text):
 
 
 def printable_text(text):
-  """Returns text encoded in a way suitable for print or `tf.logging`."""
+  """Returns text encoded in a way suitable for print or `tf.compat.v1.logging`."""
 
   # These functions want `str` for both Python2 and Python3, but in one case
   # it's a Unicode string and in the other it's a byte string.
@@ -110,7 +110,7 @@ def printable_text(text):
   elif six.PY2:
     if isinstance(text, str):
       return text
-    elif isinstance(text, unicode):
+    elif isinstance(text, str):
       return text.encode("utf-8")
     else:
       raise ValueError("Unsupported string type: %s" % (type(text)))
@@ -122,7 +122,7 @@ def load_vocab(vocab_file):
   """Loads a vocabulary file into a dictionary."""
   vocab = collections.OrderedDict()
   index = 0
-  with tf.gfile.GFile(vocab_file, "r") as reader:
+  with tf.compat.v1.gfile.GFile(vocab_file, "r") as reader:
     while True:
       token = convert_to_unicode(reader.readline())
       if not token:
