@@ -359,15 +359,16 @@ def dropout(input_tensor, dropout_prob):
   return output
 
 
-def layer_norm(input_tensor, name=None):
-  """Run layer normalization on the last dimension of the tensor."""
-  return tf.keras.layers.LayerNormalization(axis=-1,name=name,center=True,scale=True)
+# def layer_norm(input_tensor, name=None):
+#   """Run layer normalization on the last dimension of the tensor."""
+#   return tf.compat.v1.layers.layer_norm(
+#       inputs=input_tensor, begin_norm_axis=-1, begin_params_axis=-1, scope=name)
 
 
 def layer_norm_and_dropout(input_tensor, dropout_prob, name=None):
   """Runs layer normalization followed by dropout."""
-  output_tensor = layer_norm(input_tensor, name)
-  output_tensor = dropout(output_tensor, dropout_prob)
+  # output_tensor = layer_norm(input_tensor, name)
+  output_tensor = dropout(input_tensor, dropout_prob)
   return output_tensor
 
 
@@ -859,7 +860,7 @@ def transformer_model(input_tensor,
               hidden_size,
               kernel_initializer=create_initializer(initializer_range))
           attention_output = dropout(attention_output, hidden_dropout_prob)
-          attention_output = layer_norm(attention_output + layer_input)
+          # attention_output = layer_norm(attention_output + layer_input)
 
       # The activation is only applied to the "intermediate" hidden layer.
       with tf.compat.v1.variable_scope("intermediate"):
@@ -876,7 +877,7 @@ def transformer_model(input_tensor,
             hidden_size,
             kernel_initializer=create_initializer(initializer_range))
         layer_output = dropout(layer_output, hidden_dropout_prob)
-        layer_output = layer_norm(layer_output + attention_output)
+        # layer_output = layer_norm(layer_output + attention_output)
         prev_output = layer_output
         all_layer_outputs.append(layer_output)
 
