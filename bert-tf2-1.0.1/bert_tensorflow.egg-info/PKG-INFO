@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: bert-tf2
+Version: 1.0.1
+Summary: BERT
+Home-page: https://github.com/jemiaymen/bert
+Author: Google Inc.
+Author-email: jemiaymen@gmail.com
+License: Apache 2.0
+Description: UNKNOWN
+Platform: UNKNOWN
+Provides-Extra: tensorflow
+Provides-Extra: tensorflow_gpu
+Provides-Extra: tensorflow-hub
